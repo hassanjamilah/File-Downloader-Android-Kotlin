@@ -7,13 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radio_glide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Glide"
+            android:tag="https://github.com/bumptech/glide" />
+
+        <RadioButton
+            android:id="@+id/radio_udacity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Udacity Starter"
+            android:tag="https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter" />
+
+        <RadioButton
+            android:id="@+id/radio_retrofit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retrofit"
+            android:tag="https://github.com/square/retrofit" />
+    </RadioGroup>
+
+    <com.hassan.filedownloader.LoadingButton
+        android:id="@+id/loadingButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:buttonColor="#6200EE"
+        app:buttonText="Download"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:textColor="#FFFFFF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
