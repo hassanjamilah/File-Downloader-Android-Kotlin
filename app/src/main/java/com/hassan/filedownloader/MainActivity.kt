@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -24,7 +25,12 @@ import java.net.URL
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 1)
+        }
+
         createNotificationChannel()
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -43,7 +49,10 @@ class MainActivity : AppCompatActivity() {
                 download(selectedUrl) {
                     runOnUiThread {
                         button.completeLoading()
-                        showNotification(selectedUrl) // coming up next step
+                        runOnUiThread {
+                            showNotification(selectedUrl)
+                        }
+
                     }
                 }
             }
@@ -86,6 +95,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showNotification(url: String) {
+        Log.d("main_tag", "Hello")
         val intent = Intent(this, DetailActivity::class.java).apply {
             putExtra("repo_name", getRepoName(url))
             putExtra("status", "Success")
@@ -101,6 +111,7 @@ class MainActivity : AppCompatActivity() {
             .setContentTitle("Download Complete")
             .setContentText("Tap to view details")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
             .addAction(R.drawable.ic_details, "View Details", pendingIntent)
 
         with(NotificationManagerCompat.from(this)) {
