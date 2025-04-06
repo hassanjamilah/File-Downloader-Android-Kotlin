@@ -5,12 +5,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -28,5 +30,11 @@ class DetailActivity : AppCompatActivity() {
         findViewById<Button>(R.id.backButton).setOnClickListener {
             finish()
         }
+
+        val motionLayout = findViewById<MotionLayout>(R.id.main)
+        motionLayout.postDelayed({
+            motionLayout.transitionToEnd()
+        }, 1000)
+
     }
 }

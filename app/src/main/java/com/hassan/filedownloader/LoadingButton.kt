@@ -69,20 +69,32 @@ class LoadingButton @JvmOverloads constructor(
             val top = (height - size) / 2
             val rect = RectF(left, top, left + size, top + size)
             canvas.drawArc(rect, 0f, sweepAngle, true, paint)
+            paint.color = Color.DKGRAY
+            val progressWidth = width * progress
+            canvas.drawRect(0f, 0f, progressWidth, height.toFloat(), paint)
         }
     }
 
     fun startLoading() {
         buttonState = ButtonState.Loading
         buttonText = "Loading..."
-        startProgressAnimation()
-        invalidate()
+        progress = 0f
+        progressAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 1000L
+            repeatCount = ValueAnimator.INFINITE
+            addUpdateListener {
+                progress = it.animatedValue as Float
+                invalidate()
+            }
+            start()
+        }
     }
 
     fun completeLoading() {
         buttonState = ButtonState.Completed
         buttonText = "Download"
         progressAnimator?.cancel()
+        progress = 0f
         invalidate()
     }
 
